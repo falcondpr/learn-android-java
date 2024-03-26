@@ -10,11 +10,13 @@
     <EditText
         android:id="@+id/et1"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="266dp"
         android:ems="10"
-        android:hint="Ingrese el primer valor"
-        android:inputType="number"
+        android:hint="Ingrese primer valor"
+        android:inputType="numberSigned"
+        app:layout_constraintBottom_toTopOf="@+id/btnCalculate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,35 +24,64 @@
     <EditText
         android:id="@+id/et2"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="590dp"
         android:ems="10"
-        android:hint="Ingrese el segundo valor"
-        android:inputType="number"
+        android:hint="Ingrese segundo valor"
+        android:inputType="numberSigned"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et1" />
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:onClick="sumNums"
-        android:text="Sumar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et2" />
-
-    <TextView
-        android:id="@+id/txt1"
+    <RadioGroup
+        android:id="@+id/radioGroup4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="42dp"
-        android:text="La suma es"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="49dp"
+        android:layout_marginBottom="429dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintTop_toBottomOf="@+id/et1"
+        app:layout_constraintVertical_bias="0.89">
+
+        <RadioButton
+            android:id="@+id/rb1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sumar" />
+
+        <RadioButton
+            android:id="@+id/rb2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Restar" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnCalculate"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginEnd="76dp"
+        android:layout_marginBottom="74dp"
+        android:onClick="calculateOperation"
+        android:text="Calcular"
+        app:layout_constraintBottom_toTopOf="@+id/textResult"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et1" />
+
+    <TextView
+        android:id="@+id/textResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="31dp"
+        android:layout_marginBottom="251dp"
+        android:text="El resultado es"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/btnCalculate"
+        app:layout_constraintTop_toBottomOf="@+id/btnCalculate" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
