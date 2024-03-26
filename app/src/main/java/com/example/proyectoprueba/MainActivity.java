@@ -2,48 +2,41 @@ package com.example.proyectoprueba;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.TextView;
+import android.widget.Switch;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    private EditText et1, et2;
-    private TextView textResult;
-    private CheckBox check1, check2;
-
+    private Switch switch1, switch2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        et1 = findViewById(R.id.et1);
-        et2 = findViewById(R.id.et2);
-
-        check1 = findViewById(R.id.check1);
-        check2 = findViewById(R.id.check2);
-
-        textResult = findViewById(R.id.textResult);
+        switch1 = findViewById(R.id.switch1);
+        switch2 = findViewById(R.id.switch2);
     }
 
-    public void calculateOperation(View v) {
-        int v1 = Integer.parseInt(et1.getText().toString());
-        int v2 = Integer.parseInt(et2.getText().toString());
+    public void verifyMovilData(View v) {
+        if(switch1.isChecked()) {
+            Toast.makeText(this, "Datos moviles activados", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Datos moviles desactivados", Toast.LENGTH_SHORT).show();
+        }
+    }
 
-        String result = "";
-
-        if (check1.isChecked()) {
-            int suma = v1 + v2;
-            result += "La suma es: " + suma + " ";
+    public void verify(View v) {
+        if(switch1.isChecked()) {
+            Toast.makeText(this, "Datos moviles activos", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Datos moviles desactivados", Toast.LENGTH_SHORT).show();
         }
 
-        if (check2.isChecked()) {
-            int resta = v1 - v2;
-            result += " La resta es: " + resta;
+        if(switch2.isChecked()) {
+            Toast.makeText(this, "Wifi activos", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Wifi desactivados", Toast.LENGTH_SHORT).show();
         }
-
-        textResult.setText(result);
     }
 }
