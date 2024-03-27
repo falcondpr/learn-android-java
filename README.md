@@ -1,7 +1,3 @@
-Claro, aquí tienes un ejemplo básico de un README para un proyecto de Java con Android utilizando Android Studio:
-
----
-
 # Nombre del Proyecto
 
 Breve descripción del proyecto.
