@@ -2,41 +2,53 @@ package com.example.proyectoprueba;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Switch;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    private Switch switch1, switch2;
+    private ImageView image1, image2, image3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        switch1 = findViewById(R.id.switch1);
-        switch2 = findViewById(R.id.switch2);
+        image1 = findViewById(R.id.image1);
+        image2 = findViewById(R.id.image2);
+        image3 = findViewById(R.id.image3);
     }
 
-    public void verifyMovilData(View v) {
-        if(switch1.isChecked()) {
-            Toast.makeText(this, "Datos moviles activados", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Datos moviles desactivados", Toast.LENGTH_SHORT).show();
-        }
-    }
+    public void drop(View v) {
+        int value1 = 1 + (int)(Math.random() * 6);
+        int value2 = 1 + (int)(Math.random() * 6);
+        int value3 = 1 + (int)(Math.random() * 6);
 
-    public void verify(View v) {
-        if(switch1.isChecked()) {
-            Toast.makeText(this, "Datos moviles activos", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Datos moviles desactivados", Toast.LENGTH_SHORT).show();
+        switch (value1) {
+            case 1: image1.setImageResource(R.drawable.dado1);break;
+            case 2: image1.setImageResource(R.drawable.dado2);break;
+            case 3: image1.setImageResource(R.drawable.dado3);break;
+            case 4: image1.setImageResource(R.drawable.dado4);break;
+            case 5: image1.setImageResource(R.drawable.dado5);break;
+            case 6: image1.setImageResource(R.drawable.dado6);break;
         }
 
-        if(switch2.isChecked()) {
-            Toast.makeText(this, "Wifi activos", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Wifi desactivados", Toast.LENGTH_SHORT).show();
+        switch (value2) {
+            case 1: image2.setImageResource(R.drawable.dado1);break;
+            case 2: image2.setImageResource(R.drawable.dado2);break;
+            case 3: image2.setImageResource(R.drawable.dado3);break;
+            case 4: image2.setImageResource(R.drawable.dado4);break;
+            case 5: image2.setImageResource(R.drawable.dado5);break;
+            case 6: image2.setImageResource(R.drawable.dado6);break;
+        }
+
+        switch (value3) {
+            case 1: image3.setImageResource(R.drawable.dado1);break;
+            case 2: image3.setImageResource(R.drawable.dado2);break;
+            case 3: image3.setImageResource(R.drawable.dado3);break;
+            case 4: image3.setImageResource(R.drawable.dado4);break;
+            case 5: image3.setImageResource(R.drawable.dado5);break;
+            case 6: image3.setImageResource(R.drawable.dado6);break;
         }
     }
 }
