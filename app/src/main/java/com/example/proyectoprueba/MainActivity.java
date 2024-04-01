@@ -1,59 +1,63 @@
 package com.example.proyectoprueba;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    private Spinner spinner1;
-    private TextView txtResult;
-    private EditText i1, i2;
-    private String[] operations = {"sumar", "restar", "multiplicar", "dividir"};
+    String[] countries={"Argentina","Bolivia","Brasil"};
+    int [] flags = {R.drawable.dado1, R.drawable.dado2, R.drawable.dado3};
+    Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        i1 = findViewById(R.id.input1);
-        i2 = findViewById(R.id.input2);
-
-        txtResult = findViewById(R.id.textResult);
-        spinner1 = findViewById(R.id.spinner1);
-
-        ArrayAdapter<String>adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, operations);
-        spinner1.setAdapter(adapter1);
+        spinner = findViewById(R.id.spinner);
+        CountriesAdapter adapter1 = new CountriesAdapter();
+        spinner.setAdapter(adapter1);
     }
 
-    public void operate(View v) {
-        int value1 = Integer.parseInt(i1.getText().toString());
-        int value2 = Integer.parseInt(i2.getText().toString());
+    public void getItemFn(View v) {
+        Toast.makeText(this, spinner.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+    }
 
-        String operation = spinner1.getSelectedItem().toString();
-
-        if (operation.equals("sumar")) {
-            int suma = value1 + value2;
-            txtResult.setText("La suma es: " + suma);
+    class CountriesAdapter extends BaseAdapter {
+        @Override
+        public int getCount() {
+            return countries.length;
         }
 
-        if (operation.equals("restar")) {
-            int resta = value1 - value2;
-            txtResult.setText("La resta es: " + resta);
+        @Override
+        public Object getItem(int position) {
+            return countries[position];
         }
 
-        if (operation.equals("multiplicar")) {
-            int multiplicacion = value1 * value2;
-            txtResult.setText("La multiplicacion es: " + multiplicacion);
+        @Override
+        public long getItemId(int position) {
+            return 0;
         }
 
-        if (operation.equals("dividir")) {
-            int division = value1 / value2;
-            txtResult.setText("La division es: " + division);
+        @SuppressLint({"ViewHolder", "InflateParams"})
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater inflater  = LayoutInflater.from(MainActivity.this);
+            convertView = inflater.inflate(R.layout.itemspinner, null);
+            ImageView iv1 = convertView.findViewById(R.id.imageView);
+            TextView txt1 = convertView.findViewById(R.id.txtCountry);
+            iv1.setImageResource(flags[position]);
+            txt1.setText(countries[position]);
+            return convertView;
         }
     }
 }
