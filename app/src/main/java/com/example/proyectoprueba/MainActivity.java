@@ -1,9 +1,10 @@
 package com.example.proyectoprueba;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,62 +13,105 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MainActivity extends AppCompatActivity {
-    String[] names={"dado1","dado2","dado3","dado4","dado5","dado6"};
-    float[] circlesCount={1,2,3,4,5,6};
-    int[] photos={R.drawable.dado1,R.drawable.dado2,R.drawable.dado3,R.drawable.dado4,R.drawable.dado5,R.drawable.dado6};
+import java.util.ArrayList;
 
+public class MainActivity extends AppCompatActivity {
+    ArrayList<Persona> people;
     RecyclerView rv1;
+    EditText input1, input2;
+    AdapterPerson adapterPerson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        rv1 = findViewById(R.id.recyclerView);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        rv1.setLayoutManager(linearLayoutManager);
-        rv1.setAdapter(new AdapterDado());
+        rv1 = findViewById(R.id.rv1);
+        input1 = findViewById(R.id.input1);
+        input2 = findViewById(R.id.input2);
+
+        people = new ArrayList<Persona>();
+        people.add(new Persona("Lucas", "911"));
+        people.add(new Persona("Sofia", "132"));
+        people.add(new Persona("Laura", "999"));
+
+        LinearLayoutManager l = new LinearLayoutManager(this);
+        rv1.setLayoutManager(l);
+
+        adapterPerson = new AdapterPerson();
+        rv1.setAdapter(adapterPerson);
     }
 
-    private class AdapterDado extends RecyclerView.Adapter<AdapterDado.AdapterDadoHolder> {
+    public void add(View v) {
+        Persona person1 = new Persona(input1.getText().toString(), input2.getText().toString());
+        people.add(person1);
+        input1.setText("");
+        input2.setText("");
+
+        adapterPerson.notifyDataSetChanged();
+        rv1.scrollToPosition(people.size() - 1);
+    }
+
+    public void remove(View v) {
+        int pos = -1;
+
+        for(int f = 0; f < people.size(); f++) {
+            if(people.get(f).getName().equals(input1.getText().toString())) {
+                pos = f;
+            }
+        }
+        if (pos != -1) {
+            people.remove(pos);
+            input1.setText("");
+            input2.setText("");
+            adapterPerson.notifyDataSetChanged();
+            Toast.makeText(this, "Se elimino el usuario", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "No existe el usuario", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void show(int pos) {
+        input1.setText(people.get(pos).getName());
+        input2.setText(people.get(pos).getPhone());
+    }
+
+    private class AdapterPerson extends RecyclerView.Adapter<AdapterPerson.AdapterPersonHolder> {
         @NonNull
         @Override
-        public AdapterDadoHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new AdapterDadoHolder(getLayoutInflater().inflate(R.layout.itemdado, parent, false));
+        public AdapterPersonHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            return new AdapterPersonHolder(getLayoutInflater().inflate(R.layout.itemperson, parent, false));
         }
 
         @Override
-        public void onBindViewHolder(@NonNull AdapterDadoHolder holder, int position) {
-            holder.printFn(position);
+        public void onBindViewHolder(@NonNull AdapterPersonHolder holder, int position) {
+            holder.print(position);
         }
 
         @Override
         public int getItemCount() {
-            return circlesCount.length;
+            return people.size();
         }
 
-        private class AdapterDadoHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        class AdapterPersonHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             TextView txt1, txt2;
-            ImageView img1;
-            public AdapterDadoHolder(@NonNull View itemView) {
-                super(itemView);
-                img1 = itemView.findViewById(R.id.imageView2);
-                txt1 = itemView.findViewById(R.id.txtName1);
-                txt2 = itemView.findViewById(R.id.txtName2);
 
+            public AdapterPersonHolder(@NonNull View itemView) {
+                super(itemView);
+                txt1 = itemView.findViewById(R.id.txtName);
+                txt2 = itemView.findViewById(R.id.txtPhone);
                 itemView.setOnClickListener(this);
             }
 
-            public void printFn(int position) {
-                img1.setImageResource(photos[position]);
-                txt1.setText(names[position]);
-                txt2.setText(String.valueOf(circlesCount[position]));
+            public void print(int position) {
+                txt1.setText("Nombre: " + people.get(position).getName());
+                txt2.setText("Telefono: " + people.get(position).getPhone());
             }
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, names[getLayoutPosition()], Toast.LENGTH_SHORT).show();
+                show(getLayoutPosition());
             }
         }
     }
