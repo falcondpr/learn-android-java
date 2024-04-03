@@ -1,7 +1,7 @@
 package com.example.proyectoprueba;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -11,7 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 public class MainActivity extends AppCompatActivity {
-    EditText input1, input2;
+    EditText input1, input2, input3, input4;
+    AdminSQLiteOpenHelper admin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,29 +20,29 @@ public class MainActivity extends AppCompatActivity {
 
         input1 = findViewById(R.id.input1);
         input2 = findViewById(R.id.input2);
+        input3 = findViewById(R.id.input3);
+        input4 = findViewById(R.id.input4);
+
+        admin = new AdminSQLiteOpenHelper(this, "bd1", null, 1);
     }
 
-    public void save(View v) {
-        SharedPreferences sp = getSharedPreferences("agenda", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        String date1 = input1.getText().toString();
-        String activityText = input2.getText().toString();
-        editor.putString(date1, activityText);
-        editor.commit();
+    public void add(View v) {
+        SQLiteDatabase bd = admin.getWritableDatabase();
+        ContentValues registerInfo = new ContentValues();
+
+        registerInfo.put("patente", input1.getText().toString());
+        registerInfo.put("marca", input2.getText().toString());
+        registerInfo.put("modelo", input3.getText().toString());
+        registerInfo.put("precio", input4.getText().toString());
+
+        bd.insert("vehicles", null, registerInfo);
+
         input1.setText("");
         input2.setText("");
-        Toast.makeText(this, "Las actividades fueron registradas", Toast.LENGTH_SHORT).show();
-    }
+        input3.setText("");
+        input4.setText("");
+        bd.close();
 
-    public void recover(View v) {
-        SharedPreferences sp = getSharedPreferences("agenda", Context.MODE_PRIVATE);
-        String dataFile = sp.getString(input1.getText().toString(), "Not found!");
-
-        if (dataFile.equals("Not found!")) {
-            input2.setText("");
-            Toast.makeText(this, "Las actividades NO fueron encontradas", Toast.LENGTH_SHORT).show();
-        } else {
-            input2.setText(dataFile);
-        }
+        Toast.makeText(this, "Vehiculo agregado", Toast.LENGTH_SHORT).show();
     }
 }
