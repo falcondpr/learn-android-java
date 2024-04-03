@@ -47,4 +47,25 @@
         android:layout_height="wrap_content"
         android:onClick="add"
         android:text="Agregar" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="getVehicle"
+        android:text="Consulta por patente" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="delete"
+        android:text="Eliminar" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="modify"
+        android:text="Modificar" />
 </LinearLayout>
